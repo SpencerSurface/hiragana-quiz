@@ -1,5 +1,5 @@
 let currentQuestionNum = 1;
-const quizLength = 20;
+const quizLength = 2;
 const mcOptions = 4;
 let quizScore = 0;
 
@@ -8,9 +8,16 @@ let questionKana = [];
 const startButton = document.querySelector("#start-button");
 const startDiv = document.querySelector("#start-div");
 const mainEl = document.querySelector("main");
+let nextButton;
+let mcButtons;
 const quizDiv = createQuizDiv();
 
+
+
 startButton.addEventListener("click", startQuiz);
+nextButton.addEventListener("click", displayNextQuestion);
+
+
 
 function startQuiz() {
     startDiv.remove();
@@ -41,20 +48,19 @@ function createQuizDiv() {
     for (let i = 0; i < mcOptions; i++) {
         let mcButton = document.createElement("button");
         mcButton.classList.add("mc-button");
-        mcButton.textContent = (i + 1) + ". ";
         quizDiv.append(mcButton);
     }
 
-    let nextButton = document.createElement("button");
+    // Note: global scope
+    nextButton = document.createElement("button");
     nextButton.textContent = "Next Question";
-    nextButton.setAttribute("disabled", true);
+    // nextButton.setAttribute("disabled", true);
     quizDiv.append(nextButton);
 
     return quizDiv;
 }
 
 function displayNewQuestion() {
-    console.log(questionKana);
     let currentKana = questionKana[currentQuestionNum - 1].kana;
     let currentRomaji = questionKana[currentQuestionNum - 1].romaji;
     document.querySelector("#kana-span").textContent = currentKana;
@@ -68,11 +74,20 @@ function displayNewQuestion() {
         }
     }
 
-    let mcButtons = document.querySelectorAll(".mc-button");
-    console.log(mcButtons);
+    // Note: global scope
+    mcButtons = document.querySelectorAll(".mc-button");
     for (let i = 0; i < mcButtons.length; i++) {
-        console.log(mcButtons[i]);
-        mcButtons[i].textContent = mcButtons[i].textContent + romajiList.splice(Math.floor(romajiList.length * Math.random()), 1)[0];
+        mcButtons[i].textContent = (i + 1) + ". " + romajiList.splice(Math.floor(romajiList.length * Math.random()), 1)[0];
+    }
+}
+
+function displayNextQuestion() {
+    console.log(currentQuestionNum, quizLength);
+    currentQuestionNum++;
+    if (currentQuestionNum <= quizLength) {
+        displayNewQuestion();
+    } else {
+        console.log("end");
     }
 }
 
