@@ -12,13 +12,15 @@ let nextButton;
 let mcButtons;
 let alertEl;
 const quizDiv = createQuizDiv();
+let returnButton;
+const endDiv = createEndDiv();
 
 
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", displayNextQuestion);
 quizDiv.addEventListener("click", handleQuizDivClick);
-
+returnButton.addEventListener("click", returnToStart);
 
 
 function startQuiz() {
@@ -61,6 +63,22 @@ function createQuizDiv() {
     return quizDiv;
 }
 
+function createEndDiv() {
+    let endDiv = document.createElement("div");
+    endDiv.id = "end-div";
+    let headingEl = document.createElement("h2");
+    headingEl.textContent = "Game Over";
+    let scoreEl = document.createElement("p");
+    scoreEl.textContent = "Your score is: " + quizScore + "/" + quizLength;
+    // Note: global scope
+    returnButton = document.createElement("button");
+    returnButton.textContent = "Go Back";
+    returnButton.id = "return-button";
+    endDiv.append(headingEl, scoreEl, returnButton);
+
+    return endDiv;
+}
+
 function displayNewQuestion() {
     isAnswered = false;
     nextButton.disabled = true;
@@ -92,7 +110,8 @@ function displayNextQuestion() {
     if (currentQuestionNum <= quizLength) {
         displayNewQuestion();
     } else {
-        console.log("end");
+        quizDiv.remove();
+        mainEl.append(endDiv);
     }
 }
 
@@ -100,8 +119,8 @@ function handleQuizDivClick(event) {
     if (event.target.classList.contains("mc-button")) {
         if (!isAnswered) {
             if (checkAnswer(event.target.dataset.romaji)) {
-                alert("Correct!");
                 quizScore++;
+                alert("Correct!");
             } else {
                 alert("Wrong!");
             }
@@ -117,6 +136,11 @@ function handleQuizDivClick(event) {
 
 function checkAnswer(answeredRomaji) {
     return answeredRomaji === questionKana[currentQuestionNum - 1].romaji;
+}
+
+function returnToStart() {
+    endDiv.remove();
+    mainEl.append(startDiv);
 }
 
 function randomKana() {
