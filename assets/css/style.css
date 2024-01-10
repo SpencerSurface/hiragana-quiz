@@ -1,3 +1,8 @@
+:root {
+    --green: rgb(63, 191, 63);
+    --red: rgb(255, 63, 63);
+}
+
 * {
     font-family: sans-serif;
 }
@@ -17,13 +22,19 @@ h1 {
     font-size: 3em;
 }
 
+h2 {
+    font-size: 2em;
+}
+
 p, button {
     font-size: 1.5em;
 }
 
 button {
-    padding: 0.2em;
+    padding: 0.3em;
     margin: 0.2em;
+    border: 1px solid rgb(143, 143, 156);
+    border-radius: 3px;
 }
 
 #start-div,
@@ -36,6 +47,14 @@ button {
 
 .mc-button {
     width: 10ch;
+}
+
+.correct-answer {
+    background-color: var(--green);
+}
+
+.wrong-answer {
+    background-color: var(--red);
 }
 
 #kana-span {

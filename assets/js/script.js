@@ -90,6 +90,13 @@ function createEndDiv() {
 function displayNewQuestion() {
     isAnswered = false;
     nextButton.disabled = true;
+    if (mcButtons) {
+        console.log("hi")
+        for (let i = 0; i < mcButtons.length; i++) {
+                mcButtons[i].classList.remove("correct-answer");
+            mcButtons[i].classList.remove("wrong-answer");
+        }
+    }
 
     let currentKana = questionKana[currentQuestionNum - 1].kana;
     let currentRomaji = questionKana[currentQuestionNum - 1].romaji;
@@ -135,11 +142,14 @@ function handleQuizDivClick(event) {
             }
             isAnswered = true;
             nextButton.disabled = false;
-        } else {
-            console.log("answered");
+            for (let i = 0; i < mcButtons.length; i++) {
+                if (mcButtons[i].dataset.romaji === questionKana[currentQuestionNum - 1].romaji) {
+                    mcButtons[i].classList.add("correct-answer");
+                } else {
+                    mcButtons[i].classList.add("wrong-answer");
+                }
+            }
         }
-    } else {
-        return;
     }
 }
 
