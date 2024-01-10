@@ -50,11 +50,15 @@ function createQuizDiv() {
     kanaDiv.append(kanaSpan);
     quizDiv.append(kanaDiv);
 
+    let mcDiv = document.createElement("div");
+
     for (let i = 0; i < mcOptions; i++) {
         let mcButton = document.createElement("button");
         mcButton.classList.add("mc-button");
-        quizDiv.append(mcButton);
+        mcDiv.append(mcButton);
     }
+
+    quizDiv.append(mcDiv);
 
     // Note: global scope
     nextButton = document.createElement("button");
@@ -73,9 +77,7 @@ function createEndDiv() {
     // Note: global scope
     scoreSpan = document.createElement("span");
     scoreSpan.id = "score-span";
-    scoreEl.append("Your score is ");
-    scoreEl.append(scoreSpan);
-    scoreEl.append("/" + quizLength);
+    scoreEl.append("Your score is ", scoreSpan, "/" + quizLength);
     // Note: global scope
     returnButton = document.createElement("button");
     returnButton.textContent = "Go Back";
