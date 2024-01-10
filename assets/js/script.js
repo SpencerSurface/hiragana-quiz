@@ -2,20 +2,22 @@ let currentQuestionNum = 1;
 const quizLength = 2;
 const mcOptions = 4;
 let quizScore = 0;
-
 let questionKana = [];
+let isAnswered = false;
 
 const startButton = document.querySelector("#start-button");
 const startDiv = document.querySelector("#start-div");
 const mainEl = document.querySelector("main");
 let nextButton;
 let mcButtons;
+let alertEl;
 const quizDiv = createQuizDiv();
 
 
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", displayNextQuestion);
+quizDiv.addEventListener("click", handleQuizDivClick);
 
 
 
@@ -54,13 +56,15 @@ function createQuizDiv() {
     // Note: global scope
     nextButton = document.createElement("button");
     nextButton.textContent = "Next Question";
-    // nextButton.setAttribute("disabled", true);
     quizDiv.append(nextButton);
 
     return quizDiv;
 }
 
 function displayNewQuestion() {
+    isAnswered = false;
+    nextButton.disabled = true;
+
     let currentKana = questionKana[currentQuestionNum - 1].kana;
     let currentRomaji = questionKana[currentQuestionNum - 1].romaji;
     document.querySelector("#kana-span").textContent = currentKana;
@@ -77,18 +81,42 @@ function displayNewQuestion() {
     // Note: global scope
     mcButtons = document.querySelectorAll(".mc-button");
     for (let i = 0; i < mcButtons.length; i++) {
-        mcButtons[i].textContent = (i + 1) + ". " + romajiList.splice(Math.floor(romajiList.length * Math.random()), 1)[0];
+        tempRomaji = romajiList.splice(Math.floor(romajiList.length * Math.random()), 1)[0]
+        mcButtons[i].textContent = (i + 1) + ". " + tempRomaji;
+        mcButtons[i].setAttribute("data-romaji", tempRomaji);
     }
 }
 
 function displayNextQuestion() {
-    console.log(currentQuestionNum, quizLength);
     currentQuestionNum++;
     if (currentQuestionNum <= quizLength) {
         displayNewQuestion();
     } else {
         console.log("end");
     }
+}
+
+function handleQuizDivClick(event) {
+    if (event.target.classList.contains("mc-button")) {
+        if (!isAnswered) {
+            if (checkAnswer(event.target.dataset.romaji)) {
+                alert("Correct!");
+                quizScore++;
+            } else {
+                alert("Wrong!");
+            }
+            isAnswered = true;
+            nextButton.disabled = false;
+        } else {
+            console.log("answered");
+        }
+    } else {
+        return;
+    }
+}
+
+function checkAnswer(answeredRomaji) {
+    return answeredRomaji === questionKana[currentQuestionNum - 1].romaji;
 }
 
 function randomKana() {
