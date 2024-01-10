@@ -13,6 +13,7 @@ let mcButtons;
 let alertEl;
 const quizDiv = createQuizDiv();
 let returnButton;
+let scoreSpan;
 const endDiv = createEndDiv();
 
 
@@ -69,7 +70,12 @@ function createEndDiv() {
     let headingEl = document.createElement("h2");
     headingEl.textContent = "Game Over";
     let scoreEl = document.createElement("p");
-    scoreEl.textContent = "Your score is: " + quizScore + "/" + quizLength;
+    // Note: global scope
+    scoreSpan = document.createElement("span");
+    scoreSpan.id = "score-span";
+    scoreEl.append("Your score is ");
+    scoreEl.append(scoreSpan);
+    scoreEl.append("/" + quizLength);
     // Note: global scope
     returnButton = document.createElement("button");
     returnButton.textContent = "Go Back";
@@ -111,6 +117,7 @@ function displayNextQuestion() {
         displayNewQuestion();
     } else {
         quizDiv.remove();
+        scoreSpan.textContent = quizScore;
         mainEl.append(endDiv);
     }
 }
@@ -119,7 +126,7 @@ function handleQuizDivClick(event) {
     if (event.target.classList.contains("mc-button")) {
         if (!isAnswered) {
             if (checkAnswer(event.target.dataset.romaji)) {
-                quizScore++;
+                quizScore = quizScore + 1;
                 alert("Correct!");
             } else {
                 alert("Wrong!");
