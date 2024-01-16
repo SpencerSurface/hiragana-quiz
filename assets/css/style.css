@@ -8,6 +8,7 @@
 }
 
 body {
+    background-color: pink;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,7 +16,10 @@ body {
 }
 
 main {
+    background-color: white;
     width: 50%;
+    padding: 0 1rem 1rem 1rem;
+    border: black solid 1px;
 }
 
 h1 {
@@ -32,7 +36,7 @@ p, button {
 
 button {
     padding: 0.3em;
-    margin: 0.2em;
+    margin: 0.3em;
     border: 1px solid rgb(143, 143, 156);
     border-radius: 3px;
 }
@@ -45,8 +49,15 @@ button {
     align-items: center;
 }
 
+.mc-div{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
 .mc-button {
-    width: 10ch;
+    flex: 0 0 22%;
 }
 
 .correct-answer {
@@ -59,4 +70,24 @@ button {
 
 #kana-span {
     font-size: 16em;
+}
+
+@media (max-width: 1100px) {
+    main {
+        width: 60%;
+    }
+
+    .mc-button {
+        flex: 0 0 46%;
+    }
+}
+
+@media (max-width: 700px) {
+    main {
+        width: 80%;
+    }
+
+    .mc-button {
+        flex: 0 0 92%;
+    }
 }

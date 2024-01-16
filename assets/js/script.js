@@ -51,6 +51,7 @@ function createQuizDiv() {
     quizDiv.append(kanaDiv);
 
     let mcDiv = document.createElement("div");
+    mcDiv.classList.add("mc-div");
 
     for (let i = 0; i < mcOptions; i++) {
         let mcButton = document.createElement("button");
