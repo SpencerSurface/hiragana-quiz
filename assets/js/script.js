@@ -63,8 +63,13 @@ function endQuiz() {
 function createQuizDiv() {
     let quizDiv = document.createElement("div");
     quizDiv.id = "quiz-div";
-    let kanaDiv = document.createElement("div");
 
+    let questionNumberSpan = document.createElement("span");
+    questionNumberSpan.id = "question-number-span";
+    questionNumberSpan.textContent = "--/20";
+    quizDiv.append(questionNumberSpan);
+
+    let kanaDiv = document.createElement("div");
     let kanaSpan = document.createElement("span");
     kanaSpan.id = "kana-span";
     kanaDiv.append(kanaSpan);
@@ -111,6 +116,9 @@ function createEndDiv() {
 
 // Displays a question
 function displayNewQuestion() {
+    // Display the question number
+    document.querySelector("#question-number-span").textContent = `${currentQuestionNum}/${quizLength}`;
+
     // Select the multiple choice buttons if necessary
     // Note: global scope
     if (!mcButtons) {
