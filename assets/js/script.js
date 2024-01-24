@@ -175,9 +175,8 @@ function handleQuizDivClick(event) {
             // Update the score and display whether the user was correct
             if (checkAnswer(event.target.dataset.romaji)) {
                 quizScore = quizScore + 1;
-                alert("Correct!");
             } else {
-                alert("Wrong!");
+                event.target.classList.add("wrong-answer");
             }
             // Update flag
             isAnswered = true;
@@ -187,8 +186,6 @@ function handleQuizDivClick(event) {
             for (let i = 0; i < mcButtons.length; i++) {
                 if (mcButtons[i].dataset.romaji === questionKana[currentQuestionNum - 1].romaji) {
                     mcButtons[i].classList.add("correct-answer");
-                } else {
-                    mcButtons[i].classList.add("wrong-answer");
                 }
             }
         }
