@@ -216,5 +216,5 @@ function returnToStart() {
 
 // Picks a random kana from the list of kana
 function randomKana() {
-    return kanaList[Math.floor((kanaList.length - 1) * Math.random())];
+    return kanaList[Math.floor(kanaList.length * Math.random())];
 }
